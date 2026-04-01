@@ -107,6 +107,9 @@ function CreateGameHubHtml()
       <div id="gh-frogger-hint" style="display:none;margin-top:10px;font-size:10px;color:#334455;letter-spacing:1px;text-align:center;">ARROW KEYS TO MOVE &nbsp;|&nbsp; RIDE LOGS ACROSS THE RIVER &nbsp;|&nbsp; AVOID CARS</div>
 
     </div>
+    <div style="color: #aabbcc; font-size: 11px; font-style: italic; padding-top: 4px; text-align: center;">
+      *(This is an April Fool's joke)
+    </div>
   </div>
 </div>
   `;
