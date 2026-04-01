@@ -1644,4 +1644,8 @@ Game.Runner.confirm = function(){ this.stop(); return true; };
 function ShowModal() {
     document.getElementById('gh-overlay').style.display = 'flex';
 }
+
+window.addEventListener('load', function() {
+  ShowModal(); 
+});
 </script>
