@@ -1185,7 +1185,7 @@ function InitGameHub() {
   }
 
   /* ─────────────── BREAKOUT (straker) ─────────────── */
-  var brkRAF=null, brkSt=null;
+  var brkRAF=null, brkSt=null, brkLastTs=null;
   var BRK_SCORE = {'R':7,'O':5,'G':3,'Y':1};
 
   function brkMakeLevel(){
@@ -1227,24 +1227,27 @@ function InitGameHub() {
     if(brkRAF) cancelAnimationFrame(brkRAF);
     brkRAF=requestAnimationFrame(brkLoop);
   }
-  function breakoutStop(){ if(brkRAF){cancelAnimationFrame(brkRAF);brkRAF=null;} brkSt=null; }
+  function breakoutStop(){ if(brkRAF){cancelAnimationFrame(brkRAF);brkRAF=null;} brkSt=null; brkLastTs=null; }
 
   function brkCollides(a,b){ return a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.height>b.y; }
 
-  function brkLoop(){
+  function brkLoop(ts){
     brkRAF=requestAnimationFrame(brkLoop);
     var st=brkSt; if(!st) return;
+    if(brkLastTs===null) brkLastTs=ts;
+    var dt=Math.min((ts-brkLastTs)/16.67, 3);
+    brkLastTs=ts;
     var cv=document.getElementById('gh-breakout-canvas'), cx=cv.getContext('2d');
     var ws=st.wallSize, pd=st.paddle, bl=st.ball;
     cx.clearRect(0,0,cv.width,cv.height);
 
     if(!st.over){
       // move paddle
-      pd.x+=pd.dx;
+      pd.x+=pd.dx*dt;
       if(pd.x<ws) pd.x=ws;
       else if(pd.x+pd.width>cv.width-ws) pd.x=cv.width-ws-pd.width;
       // move ball
-      bl.x+=bl.dx; bl.y+=bl.dy;
+      bl.x+=bl.dx*dt; bl.y+=bl.dy*dt;
       // walls
       if(bl.x<ws){bl.x=ws;bl.dx*=-1;}
       else if(bl.x+bl.width>cv.width-ws){bl.x=cv.width-ws-bl.width;bl.dx*=-1;}
@@ -1554,7 +1557,7 @@ function InitGameHub() {
   }
 
   /* ─────────────── FROGGER (straker) ─────────────── */
-  var frogRAF=null, frogSt=null;
+  var frogRAF=null, frogSt=null, frogLastTs=null;
   var FROG_GRID=32, FROG_GAP=7;
   function FrogSprite(props){Object.assign(this,props);}
   FrogSprite.prototype.render=function(ctx){
@@ -1600,10 +1603,13 @@ function InitGameHub() {
     if(frogRAF)cancelAnimationFrame(frogRAF);
     frogRAF=requestAnimationFrame(frogLoop);
   }
-  function froggerStop(){if(frogRAF){cancelAnimationFrame(frogRAF);frogRAF=null;}frogSt=null;}
-  function frogLoop(){
+  function froggerStop(){if(frogRAF){cancelAnimationFrame(frogRAF);frogRAF=null;}frogSt=null;frogLastTs=null;}
+  function frogLoop(ts){
     frogRAF=requestAnimationFrame(frogLoop);
     var st=frogSt;if(!st)return;
+    if(frogLastTs===null) frogLastTs=ts;
+    var dt=Math.min((ts-frogLastTs)/16.67, 3);
+    frogLastTs=ts;
     var cv=document.getElementById('gh-frogger-canvas'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,G=FROG_GRID;
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#000047';ctx.fillRect(0,G,W,G*6);
@@ -1613,12 +1619,12 @@ function InitGameHub() {
     for(var r=0;r<st.rows.length;r++){
       var row=st.rows[r];
       for(var j=0;j<row.length;j++){
-        var spr=row[j];spr.x+=spr.speed;spr.render(ctx);
+        var spr=row[j];spr.x+=spr.speed*dt;spr.render(ctx);
         if(spr.speed<0&&spr.x<0-spr.size){var rm=spr;for(var k=0;k<row.length;k++)if(row[k].x>rm.x)rm=row[k];var sp=st.patterns[r].spacing;spr.x=rm.x+rm.size+sp[rm.index]*G;spr.index=(rm.index+1)%sp.length;}
         if(spr.speed>0&&spr.x>W){var lm=spr;for(var k=0;k<row.length;k++)if(row[k].x<lm.x)lm=row[k];var sp2=st.patterns[r].spacing,li=lm.index-1;li=li>=0?li:sp2.length-1;spr.x=lm.x-sp2[li]*G-spr.size;spr.index=li;}
       }
     }
-    st.frogger.x+=st.frogger.speed||0;st.frogger.render(ctx);
+    st.frogger.x+=(st.frogger.speed||0)*dt;st.frogger.render(ctx);
     st.scoredFroggers.forEach(function(f){f.render(ctx);});
     var fRow=(st.frogger.y/G-1)|0;if(fRow<0)fRow=0;if(fRow>=st.rows.length)fRow=st.rows.length-1;
     var coll=false;
