@@ -1650,17 +1650,17 @@ function InitGameHub() {
     var G=FROG_GRID;
     var patterns=[
       null,
-      {spacing:[2],color:'#c55843',size:G*4,shape:'rect',speed:0.5},
-      {spacing:[0,2,0,2,0,2,0,4],color:'#de0004',size:G,shape:'circle',speed:-0.67},
-      {spacing:[2],color:'#c55843',size:G*7,shape:'rect',speed:1.0},
-      {spacing:[3],color:'#c55843',size:G*3,shape:'rect',speed:0.33},
-      {spacing:[0,0,1],color:'#de0004',size:G,shape:'circle',speed:-0.67},
+      {spacing:[2],color:'#c55843',size:G*4,shape:'rect',speed:1.5},
+      {spacing:[0,2,0,2,0,2,0,4],color:'#de0004',size:G,shape:'circle',speed:-1.25},
+      {spacing:[2],color:'#c55843',size:G*7,shape:'rect',speed:2},
+      {spacing:[3],color:'#c55843',size:G*3,shape:'rect',speed:1.25},
+      {spacing:[0,0,1],color:'#de0004',size:G,shape:'circle',speed:-1.25},
       null,
-      {spacing:[3,8],color:'#c2c4da',size:G*2,shape:'rect',speed:-0.67},
-      {spacing:[14],color:'#c2c4da',size:G,shape:'rect',speed:0.5},
-      {spacing:[3,3,7],color:'#de3cdd',size:G,shape:'rect',speed:-0.5},
-      {spacing:[3,3,7],color:'#0bcb00',size:G,shape:'rect',speed:0.33},
-      {spacing:[4],color:'#e5e401',size:G,shape:'rect',speed:-0.33},
+      {spacing:[3,8],color:'#c2c4da',size:G*2,shape:'rect',speed:-1.25},
+      {spacing:[4,5,4],color:'#c2c4da',size:G,shape:'rect',speed:2},
+      {spacing:[3,3,7],color:'#de3cdd',size:G,shape:'rect',speed:-2},
+      {spacing:[3,3,7],color:'#0bcb00',size:G,shape:'rect',speed:1},
+      {spacing:[4],color:'#e5e401',size:G,shape:'rect',speed:-1},
       null
     ];
     var rows=[];
