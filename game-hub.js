@@ -1083,17 +1083,13 @@ Pong.Menu.draw = function(ctx) {
   /* ── Unlock AudioContext on first user gesture anywhere on the page ── */
   function _ghUnlock() {
     resume();
-    document.removeEventListener('click',    _ghUnlock);
-    document.removeEventListener('keydown',  _ghUnlock);
-    document.removeEventListener('touchend', _ghUnlock);
-    document.removeEventListener('mousemove', _ghUnlock);
-    document.removeEventListener('mouseover', _ghUnlock);
+    document.removeEventListener('click',      _ghUnlock);
+    document.removeEventListener('keydown',    _ghUnlock);
+    document.removeEventListener('touchend',   _ghUnlock);
   }
-  document.addEventListener('click',    _ghUnlock);
-  document.addEventListener('keydown',  _ghUnlock);
-  document.addEventListener('touchend', _ghUnlock);
-  document.addEventListener('mousemove', _ghUnlock);
-  document.addEventListener('mouseover', _ghUnlock);
+  document.addEventListener('click',      _ghUnlock);
+  document.addEventListener('keydown',    _ghUnlock);
+  document.addEventListener('touchend',   _ghUnlock);
 
   /* ── Generic beep ── */
   function beep(freq, dur, type, vol, freqEnd) {
@@ -1193,6 +1189,7 @@ function InitGameHub() {
                     'gh-frogger-canvas','gh-frogger-hint'];
 
   window.ghLaunch=function(game){
+    _ghStartMusic();
     stopAll();
     ALL_PANELS.forEach(function(id){ document.getElementById(id).style.display='none'; });
     document.getElementById('gh-score-wrap').style.display='inline';
