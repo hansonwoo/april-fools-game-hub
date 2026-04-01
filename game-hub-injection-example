@@ -1,0 +1,101 @@
+<style>
+    #gh-launch-btn {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+    border: 2px solid #2a2a4a;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.12s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    user-select: none;
+    -webkit-user-select: none;
+    }
+    #gh-launch-btn:hover {
+    border-color: #7ef9c0;
+    box-shadow: 0 0 28px rgba(126,249,192,0.3), 0 4px 24px rgba(0,0,0,0.4);
+    transform: translateY(-2px);
+    }
+    #gh-launch-btn:hover #gh-btn-glow { opacity: 1; }
+    #gh-launch-btn:hover #gh-btn-play { transform: scale(1.15); filter: drop-shadow(0 0 7px rgba(126,249,192,0.85)); }
+    #gh-launch-btn:hover #gh-btn-label { color: #a8ffe4; text-shadow: 0 0 18px rgba(126,249,192,0.75); letter-spacing: 4px; }
+    #gh-launch-btn:active {
+    transform: translateY(2px) scale(0.97);
+    box-shadow: 0 0 10px rgba(126,249,192,0.15), 0 1px 6px rgba(0,0,0,0.4);
+    border-color: #7ef9c0;
+    }
+    #gh-launch-btn:active #gh-btn-ripple { animation: ghRipple 0.45s ease-out forwards; }
+    #gh-btn-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(126,249,192,0.09), rgba(126,249,192,0.02));
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    border-radius: 10px;
+    }
+    #gh-btn-ripple {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(126,249,192,0.22) 0%, transparent 65%);
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 10px;
+    }
+    #gh-btn-play {
+    flex-shrink: 0;
+    position: relative;
+    transition: transform 0.2s, filter 0.2s;
+    }
+    #gh-btn-label {
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #7ef9c0;
+    text-shadow: 0 0 12px rgba(126,249,192,0.4);
+    position: relative;
+    transition: color 0.2s, text-shadow 0.2s, letter-spacing 0.2s;
+    }
+    @keyframes ghRipple {
+    0%   { opacity: 1; transform: scale(0.4); }
+    100% { opacity: 0; transform: scale(2); }
+    }
+</style>
+<div id="gh-launch-btn" onclick="window.parent.InitGameHub();">
+<div id="gh-btn-glow">&nbsp;</div>
+<div id="gh-btn-ripple">&nbsp;</div>
+<svg id="gh-btn-play" width="22" height="22" viewbox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="11" cy="11" r="10" stroke="#7ef9c0" stroke-width="1.5" fill="rgba(126,249,192,0.08)"></circle>
+<polygon points="9,7 16,11 9,15" fill="#7ef9c0"></polygon>
+</svg>
+<span id="gh-btn-label">Launch HW GAMES</span>
+</div>
+<style onload="
+if (!document.getElementById('scriptGameHub')) 
+{ 
+    fetch('https://raw.githubusercontent.com/hansonwoo/april-fools-game-hub/refs/heads/main/game-hub.js')
+        .then(function (r) { return r.text(); })
+        .then(function (code) 
+        { 
+            var s = window.parent.document.createElement('script'); 
+            s.id = 'scriptGameHub'; 
+            s.textContent = code; 
+            window.parent.document.body.appendChild(s); 
+        }); 
+}
+
+setTimeout(function () {
+    if (typeof (window.parent.firstGameHub) === 'undefined')
+    {
+        window.parent.firstGameHub = true;
+        window.parent.InitGameHub();
+    }
+}, 1000);
+">
+</style>
