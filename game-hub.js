@@ -1080,6 +1080,21 @@ Pong.Menu.draw = function(ctx) {
   }
   function resume() { var c = getCtx(); if (c && c.state === 'suspended') c.resume(); }
 
+  /* ── Unlock AudioContext on first user gesture anywhere on the page ── */
+  function _ghUnlock() {
+    resume();
+    document.removeEventListener('click',    _ghUnlock);
+    document.removeEventListener('keydown',  _ghUnlock);
+    document.removeEventListener('touchend', _ghUnlock);
+    document.removeEventListener('mousemove', _ghUnlock);
+    document.removeEventListener('mouseover', _ghUnlock);
+  }
+  document.addEventListener('click',    _ghUnlock);
+  document.addEventListener('keydown',  _ghUnlock);
+  document.addEventListener('touchend', _ghUnlock);
+  document.addEventListener('mousemove', _ghUnlock);
+  document.addEventListener('mouseover', _ghUnlock);
+
   /* ── Generic beep ── */
   function beep(freq, dur, type, vol, freqEnd) {
     var ctx = getCtx(); if (!ctx) return;
