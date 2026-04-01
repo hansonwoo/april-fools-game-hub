@@ -1,6 +1,8 @@
-(function () {
+function CreateGameHubHtml()
+{
+  if (document.getElementById("gh-overlay"))
+    return;
 
-  // 1. Inject modal HTML
   var _ghRoot = document.createElement('div');
   _ghRoot.innerHTML = `
 <div id="gh-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;font-family:'Courier New',Courier,monospace;">
@@ -109,14 +111,8 @@
 </div>
   `;
   document.body.appendChild(_ghRoot);
+}
 
-  // 2. Show helper
-  function _ghShow() {
-    var el = document.getElementById('gh-overlay');
-    if (el) el.style.display = 'flex';
-  }
-
-  // 3. All game logic
 /* ═══════════════════════════
    GAME.JS (jakesgordon)
 ═══════════════════════════ */
@@ -1104,9 +1100,9 @@ Game.Runner.confirm = function(){ this.stop(); return true; };
 /* ═══════════════════════════════════════════════════
    GAME HUB CONTROLLER
 ═══════════════════════════════════════════════════ */
-(function(){
-
-  window.addEventListener('load',function(){ document.getElementById('gh-overlay').style.display='flex'; });
+function InitGameHub() {
+  CreateGameHubHtml();
+  ShowGameHub();
   window.ghClose=function(){ stopAll(); document.getElementById('gh-overlay').style.display='none'; };
   document.getElementById('gh-overlay').addEventListener('click',function(e){ if(e.target===this) ghClose(); });
   window.ghBackToMenu=function(){ stopAll(); document.getElementById('gh-game').style.display='none'; document.getElementById('gh-menu').style.display='block'; };
@@ -1651,14 +1647,9 @@ Game.Runner.confirm = function(){ this.stop(); return true; };
     var cv=document.getElementById('gh-frogger-canvas');
     f.x=Math.min(Math.max(0,f.x),cv.width-G);f.y=Math.min(Math.max(G,f.y),cv.height-G*2);
   }
+}
 
-})();
-
-  // 4. Open the modal immediately (page already parsed since we're in <script src>)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', _ghShow);
-  } else {
-    _ghShow();
-  }
-
-})();
+function ShowGameHub() {
+  var el = document.getElementById('gh-overlay');
+  if (el) el.style.display = 'flex';
+}
