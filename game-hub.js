@@ -1219,7 +1219,7 @@ function InitGameHub() {
       wallSize:wallSize, brickWidth:brickWidth, brickHeight:brickHeight,
       bricks:brkMakeLevel(),
       paddle:{x:200-brickWidth/2, y:440, width:brickWidth*3, height:brickHeight, dx:0},
-      ball:{x:130,y:260,width:5,height:5,speed:2,dx:0,dy:0},
+      ball:{x:130,y:260,width:5,height:5,speed:3,dx:0,dy:0},
       score:0, lives:3, over:false
     };
     document.getElementById('gh-score').textContent='0';
