@@ -1086,10 +1086,12 @@ Pong.Menu.draw = function(ctx) {
     document.removeEventListener('click',      _ghUnlock);
     document.removeEventListener('keydown',    _ghUnlock);
     document.removeEventListener('touchend',   _ghUnlock);
+    document.removeEventListener('mousemove',  _ghUnlock);
   }
   document.addEventListener('click',      _ghUnlock);
   document.addEventListener('keydown',    _ghUnlock);
   document.addEventListener('touchend',   _ghUnlock);
+  document.addEventListener('mousemove',  _ghUnlock);
 
   /* ── Generic beep ── */
   function beep(freq, dur, type, vol, freqEnd) {
@@ -1150,7 +1152,7 @@ Pong.Menu.draw = function(ctx) {
   var _music = null;
   var _GH_DEFAULT_MUSIC = 'https://raw.githubusercontent.com/hansonwoo/april-fools-game-hub/main/First%20Snow%20(Extended%20Mix).mp3';
   window._ghStartMusic = function() {
-    if (_music) return;
+    if (_music) { _music.play().catch(function() {}); return; }
     var url = window.GH_MUSIC_URL || _GH_DEFAULT_MUSIC;
     _music = new Audio(url);
     _music.loop = true;
